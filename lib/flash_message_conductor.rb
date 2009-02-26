@@ -29,7 +29,7 @@ module PlanetArgon
             else
               flash[type] = msg
             end
-          end
+          
           unless fade_option.nil?
             flash[:fade] = 'fade'
           end
