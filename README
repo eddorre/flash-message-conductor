@@ -19,13 +19,14 @@ add_message( 'foo', { :state => :keep })
 
 is the equivalent of
 
-flash.keep[:message]
+flash[:message] = 'foo'
+flash.keep(:message)
 
 Controller helpers included:
 
-add_message( message ) 
-add_notice( message )
-add_error( message )
+add_message( message, options ) 
+add_notice( message, options )
+add_error( message, options )
 
 # View helpers
 
@@ -50,7 +51,7 @@ If you want to fade the message out, call the controller helpers with the fade o
 
 add_message( 'foo', { :fade => true })
 
-This will append the extra class name 'fade' to your paragraph. Example:
+This will append the extra class name 'fade' to your p tag. Example:
 
 <div id="flash_messages">
   <p class="message fade">You have successfully done XYZ...</p>
