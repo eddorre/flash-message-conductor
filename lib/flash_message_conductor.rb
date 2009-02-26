@@ -29,11 +29,11 @@ module PlanetArgon
             else
               flash[type] = msg
             end
+          end
             
             if options[:fade]?
               flash[:fade] = 'fade'
             end
-        end
     end
   
     module ViewHelpers
