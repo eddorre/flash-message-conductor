@@ -5,15 +5,15 @@ module PlanetArgon
     FLASH_MESSAGE_TYPES = [ :error, :notice, :message ]
     
     module ControllerHelpers
-      def add_error(msg, fade_option = nil, state = nil)
+      def add_error(msg, fade_option = '', state = nil)
         set_flash(:error, msg, fade_option, state )
       end
 
-      def add_notice(msg, fade_option = nil, state = nil)
+      def add_notice(msg, fade_option = '', state = nil)
         set_flash(:notice, msg, fade_option, state )
       end
 
-      def add_message(msg, fade_option = nil, state = nil)
+      def add_message(msg, fade_option = '', state = nil)
         set_flash(:message, msg, fade_option, state )
       end
       
@@ -30,7 +30,7 @@ module PlanetArgon
               flash[type] = msg
             end
           
-          unless fade_option.nil?
+          unless fade_option == 'fade'
             flash[:fade] = 'fade'
           end
         end
@@ -39,7 +39,7 @@ module PlanetArgon
     module ViewHelpers
       def render_flash_message( css_class, message = "", fade_option = "" ) 
         return "" if message.nil? or message.blank?
-        content_tag( "p", message, :class => "#{css_class} #{fade_option}" )
+        content_tag( "p", message, :class => "#{css_class}#{ fade_option}" )
       end
     
       def render_flash_messages( div_id = "flash_messages", div_class = "" )
