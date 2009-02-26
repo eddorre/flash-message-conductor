@@ -5,29 +5,47 @@ module PlanetArgon
     FLASH_MESSAGE_TYPES = [ :error, :notice, :message ]
     
     module ControllerHelpers
-      def add_error(msg)
-        flash[:error] = msg
+      def add_error(msg, fade_option = nil, state = nil)
+        set_flash(:error, msg, fade_option, state )
       end
 
-      def add_notice(msg)
-        flash[:notice] = msg
+      def add_notice(msg, fade_option = nil, state = nil)
+        set_flash(:notice, msg, fade_option, state )
       end
 
-      def add_message(msg)
-        flash[:message] = msg
+      def add_message(msg, fade_option = nil, state = nil)
+        set_flash(:message, msg, fade_option, state )
       end
+      
+      protected
+        def set_flash(type, msg, fade_option, state)
+          case state
+            when :discard
+              flash.discard[type] = msg
+            when :now
+              flash.now[type] = msg
+            when :keep
+              flash.keep[type] = msg
+            else
+              flash[type] = msg
+            end
+          end
+          unless fade_option.nil?
+            flash[:fade] = 'fade'
+          end
+        end
     end
   
     module ViewHelpers
-      def render_flash_message( css_class, message = "" ) 
+      def render_flash_message( css_class, message = "", fade_option = "" ) 
         return "" if message.nil? or message.blank?
-        content_tag( "p", message, :class => "#{css_class}" )
+        content_tag( "p", message, :class => "#{css_class} #{fade_option}" )
       end
     
       def render_flash_messages( div_id = "flash_messages", div_class = "" )
         div_content = ''
         FLASH_MESSAGE_TYPES.each do |key|
-          div_content << render_flash_message( key.to_s, flash[key] ) unless flash[key].blank?
+          div_content << render_flash_message( key.to_s, flash[key], flash[:fade] ) unless flash[key].blank?
         end
         if div_content.blank?
           return ""
