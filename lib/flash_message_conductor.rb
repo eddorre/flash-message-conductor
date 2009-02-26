@@ -27,7 +27,7 @@ module PlanetArgon
           when :discard
             flash.discard(type)
           when :now
-            flash.now(type)
+            flash.now[type] = msg
           when :keep
             flash.keep(type)
           end

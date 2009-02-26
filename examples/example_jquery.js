@@ -4,3 +4,4 @@ $(document).ready(function() {
  
 var hideFlashes = function() {
   $('#flash_messages p.fade').fadeOut(1500);
+}
